@@ -53,6 +53,7 @@ func TestStruct(a interface{}) {
 	numOfMethod := val.NumMethod()
 	fmt.Printf("struct has %d methods\n", numOfMethod)
 
+	//按字母顺序排列的索引为1的函数
 	val.Method(1).Call(nil)
 
 	//调用结构体的第一个方法Method(0)
