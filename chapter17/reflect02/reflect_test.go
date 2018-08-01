@@ -125,6 +125,11 @@ func TestCal(t *testing.T) {
 		fmt.Printf("c.Field[%d]=%d \n", i, rVal.Field(i).Int())
 	}
 
+	rVal = reflect.ValueOf(&c)
+	rVal = rVal.Elem()
+	rVal.FieldByName("Num1").SetInt(10)
+	rVal.FieldByName("Num2").SetInt(5)
+
 	numMethod := rVal.NumMethod()
 	for i := 0; i < numMethod; i++ {
 		rVal.Method(i).Call([]reflect.Value{reflect.ValueOf("tom")})
