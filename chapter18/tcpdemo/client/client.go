@@ -30,10 +30,23 @@ func main() {
 			return
 		}
 
-		_, err = conn.Write([]byte(line + "\n")) //让服务器端换行
+		if len(line) == 0 {
+			continue
+		}
+
+		_, err = conn.Write([]byte(line))
 		if err != nil {
 			fmt.Println("client write err=", err)
 		}
+
+		buf := make([]byte, 1024)
+		n, err := conn.Read(buf) //从conn读取
+		if err != nil {
+			fmt.Println("服务器的read err=", err)
+			return
+		}
+		content := string(buf[:n])
+		fmt.Println("服务器回复:", content)
 	}
 
 }

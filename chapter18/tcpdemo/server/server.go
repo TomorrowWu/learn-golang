@@ -20,7 +20,20 @@ func process(conn net.Conn) {
 			return
 		}
 		//3,显示客户端发送的内容到服务器的终端
-		fmt.Printf(string(buf[:n]))
+		content := string(buf[:n])
+		fmt.Printf("客户端:%s\n", content)
+
+		dict := map[string]string{
+			"who are you": "我是小冰",
+			"你的性别?":       "你猜猜看",
+			"你会什么":        "我会讲故事",
+			"你讲个吧":        "从前有座山",
+		}
+		res, ok := dict[content]
+		if !ok {
+			res = "你说啥"
+		}
+		conn.Write([]byte(res))
 	}
 }
 
