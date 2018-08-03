@@ -13,3 +13,6 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+chatroom/client/chatroom_client
+/chatroom/client/client
+/chatroom/server/server
