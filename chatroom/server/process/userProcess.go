@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go_code/chatroom/common/message"
+	"go_code/chatroom/server/model"
 	"go_code/chatroom/server/utils"
 	"net"
 )
@@ -26,13 +27,21 @@ func (userProcess *UserProcess) ServerProcessLogin(mes *message.Message) (err er
 	//2,声明一个LoginResMes,并完成赋值
 	var loginResMes message.LoginResMes
 
-	if loginMes.UserId == 100 && loginMes.UserPwd == "123456" {
-		//合法
-		loginResMes.Code = 200
+	user, err := model.MyUserDao.Login(loginMes.UserId, loginMes.UserPwd)
+	if err != nil {
+		if err == model.ERROR_USER_NOTEXITS {
+			loginResMes.Code = 500
+			loginResMes.Error = err.Error()
+		} else if err == model.ERROR_USER_PWD {
+			loginResMes.Code = 403
+			loginResMes.Error = err.Error()
+		} else {
+			loginResMes.Code = 505
+			loginResMes.Error = "服务器内部错误..."
+		}
 	} else {
-		//不合法
-		loginResMes.Code = 500 //500 状态码表示该用户不存在
-		loginResMes.Error = "该用户不存在,请注册再使用..."
+		loginResMes.Code = 200
+		fmt.Println(user, "登录成功")
 	}
 
 	//3,将loginResMes 序列化

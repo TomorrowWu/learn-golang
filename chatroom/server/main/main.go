@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"go_code/chatroom/server/model"
 	"net"
+	"time"
 )
 
 func process(conn net.Conn) {
@@ -20,7 +22,14 @@ func process(conn net.Conn) {
 	}
 }
 
+func initUserDao() {
+	//这里需要注意一个初始化顺序的问题,
+	model.MyUserDao = model.NewUserDao(pool)
+}
+
 func main() {
+	initPool("localhost:6379", 16, 0, 300*time.Second)
+	initUserDao()
 
 	//
 	fmt.Println("服务器在8889端口监听")

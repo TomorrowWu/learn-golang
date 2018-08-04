@@ -1,14 +1,17 @@
-package main
+package process
 
 import (
 	"encoding/json"
 	"fmt"
+	"go_code/chatroom/client/utils"
 	"go_code/chatroom/common/message"
 	"net"
 )
 
-//写一个函数,完成登录
-func login(userId int, userPwd string) (err error) {
+type UserProcess struct {
+}
+
+func (userProcess *UserProcess) Login(userId int, userPwd string) (err error) {
 	//下一步开始定协议...
 	//fmt.Printf("userId = %d userPwd=%s", userId, userPwd)
 
@@ -45,13 +48,18 @@ func login(userId int, userPwd string) (err error) {
 		return
 	}
 
-	err = writePkg(conn, data)
+	transfer := utils.Transfer{
+		Conn: conn,
+		Buf:  [8096]byte{},
+	}
+
+	err = transfer.WritePkg(data)
 	if err != nil {
 		return
 	}
 
 	//处理服务器登录返回的消息
-	mes, err = readPkg(conn)
+	mes, err = transfer.ReadPkg()
 	if err != nil {
 		fmt.Println("readPkg(conn) err=", err)
 		return
@@ -65,7 +73,7 @@ func login(userId int, userPwd string) (err error) {
 	}
 
 	if loginResMes.Code == 200 {
-		fmt.Println("登录成功")
+		ShowMenu()
 	} else if loginResMes.Code == 500 {
 		fmt.Println(loginResMes.Error)
 	}
