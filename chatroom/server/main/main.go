@@ -27,9 +27,12 @@ func initUserDao() {
 	model.MyUserDao = model.NewUserDao(pool)
 }
 
-func main() {
+func init() {
 	initPool("localhost:6379", 16, 0, 300*time.Second)
 	initUserDao()
+}
+
+func main() {
 
 	//
 	fmt.Println("服务器在8889端口监听")
