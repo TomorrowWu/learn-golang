@@ -51,6 +51,7 @@ func (circleQueue *CircleQueue) ListQueue() {
 }
 
 func (circleQueue *CircleQueue) IsFull() bool {
+	//会预留一个空位,
 	return (circleQueue.tail+1)%circleQueue.maxSize == circleQueue.head
 }
 
