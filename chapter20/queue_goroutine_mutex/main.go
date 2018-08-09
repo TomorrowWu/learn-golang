@@ -3,17 +3,30 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
+	"sync"
+	"time"
 )
+
+//1. 	1)创建一个数组模拟队列，每隔一定时间[随机的]， 给该数组添加一个数。
+//2. 	2)启动两个协程，每隔一定时间(时间随机)到队列取出数据
+//3. 	3)在控制台输出
+//x号协程 服务 ---》x号客户
+//x号协程 服务 ---》x号客户
+//x号协程 服务 ---》x号客户
+//4. 	4)使用锁机制即可。
+
+var mutex sync.Mutex
 
 type CircleQueue struct {
 	maxSize int //4
-	array   [5]int
+	array   [10]int
 	head    int //指向队列队首 0,包含元素
 	tail    int //指向队尾 0,不含最后元素
 }
 
 func (circleQueue *CircleQueue) Push(val int) (err error) {
+	mutex.Lock()
+	defer mutex.Unlock()
 	if circleQueue.IsFull() {
 		return errors.New("queue is full")
 	}
@@ -24,6 +37,8 @@ func (circleQueue *CircleQueue) Push(val int) (err error) {
 }
 
 func (circleQueue *CircleQueue) Pop() (val int, err error) {
+	mutex.Lock()
+	defer mutex.Unlock()
 	if circleQueue.IsEmpty() {
 		return 0, errors.New("queue is empty")
 	}
@@ -35,6 +50,8 @@ func (circleQueue *CircleQueue) Pop() (val int, err error) {
 }
 
 func (circleQueue *CircleQueue) ListQueue() {
+	mutex.Lock()
+	defer mutex.Unlock()
 	//取出当前队列有多少个元素
 	size := circleQueue.Size()
 	if size == 0 {
@@ -67,45 +84,40 @@ func (circleQueue *CircleQueue) Size() int {
 	return (circleQueue.tail + circleQueue.maxSize - circleQueue.head) % circleQueue.maxSize
 }
 
+func process(n int, queue *CircleQueue) {
+	for {
+		time.Sleep(3 * time.Second)
+		val, err := queue.Pop()
+		if err != nil {
+			fmt.Println("err=", err)
+		} else {
+			fmt.Printf("%d号协程 服务-->> %d号客户\n", n, val)
+		}
+	}
+}
+
 func main() {
+
 	//初始化一个环形队列
 	queue := &CircleQueue{
-		maxSize: 5,
+		maxSize: 10,
 		head:    0,
 		tail:    0,
 	}
 
-	var key string
-	var val int
+	go process(1, queue)
+	go process(2, queue)
+
+	//每隔一定时间(随机),给数组添加一个数
+	i := 0
 	for {
-		fmt.Println("1. 输入add 表示添加数据到队列")
-		fmt.Println("2. 输入get 表示从队列获取数据")
-		fmt.Println("3. 输入show 表示显示队列")
-		fmt.Println("4. 输入exit 表示显示队列")
-
-		fmt.Scanln(&key)
-		switch key {
-		case "add":
-			fmt.Println("输入你要入队列数")
-			fmt.Scanln(&val)
-			err := queue.Push(val)
-			if err != nil {
-				fmt.Println(err.Error())
-			} else {
-
-				fmt.Println("加入队列ok")
-			}
-		case "get":
-			val, err := queue.Pop()
-			if err != nil {
-				fmt.Println(err.Error())
-			} else {
-				fmt.Println("从队列中取出了一个数=", val)
-			}
-		case "show":
-			queue.ListQueue()
-		case "exit":
-			os.Exit(0)
+		err := queue.Push(i)
+		if err != nil {
+			fmt.Println("err=", err)
+		} else {
+			i++
 		}
+		//interval := rand.Intn(3)
+		time.Sleep(1 * time.Second)
 	}
 }
