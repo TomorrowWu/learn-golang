@@ -33,7 +33,7 @@ func main() {
 }
 
 func excise() {
-	var v float64 = 1.2
+	var v = 1.2
 
 	rVal := reflect.ValueOf(v)
 

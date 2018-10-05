@@ -7,5 +7,3 @@
 ## [Go实现各种数据结构以及相关算法、排序算法等](./chapter20)
 
 ## [Go TCP编程,实现聊天室功能](./chatroom)
-
-## [Goroutine+channel使用并发](./goroutineapply03)

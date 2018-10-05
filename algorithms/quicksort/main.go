@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// QuickSort Sorts the array with Quick-sort
 func QuickSort(left, right int, arr []int) {
 	l := left
 	r := right

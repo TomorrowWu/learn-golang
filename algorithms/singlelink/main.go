@@ -9,6 +9,7 @@ type HeroNode struct {
 	next     *HeroNode //这个表示指向下一个结点
 }
 
+// InsertHeroNode
 //给链表插入一个结点
 //编写第一种插入方法，在单链表的最后加入.[简单]
 func InsertHeroNode(head *HeroNode, newHeroNode *HeroNode) {

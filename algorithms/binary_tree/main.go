@@ -9,7 +9,7 @@ type Hero struct {
 	Right *Hero
 }
 
-//前序遍历 root-左子树-右子树
+//PreOrder 前序遍历 root-左子树-右子树
 func PreOrder(node *Hero) {
 	if node != nil {
 		fmt.Printf("no=%d name=%s \n", node.No, node.Name)
@@ -18,7 +18,7 @@ func PreOrder(node *Hero) {
 	}
 }
 
-//中序遍历 左-root-右
+//InfixOrder 中序遍历 左-root-右
 func InfixOrder(node *Hero) {
 	if node != nil {
 		InfixOrder(node.Left)

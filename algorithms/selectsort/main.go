@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// SelectSort Sorts the array with Select-sort
 func SelectSort(arr *[5]int) {
 	//(*arr)[1] = 600 等价于 arr[1] = 600,编译器会加*
 	//(*arr)[1] = 600
