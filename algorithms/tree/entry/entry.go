@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learn-golang/tree"
+	"learn-golang/algorithms/tree"
 )
 
 // 扩展已有类型-组合形式

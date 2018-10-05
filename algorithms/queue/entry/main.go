@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learn-golang/queue"
+	"learn-golang/algorithms/queue"
 )
 
 func main() {
