@@ -22,6 +22,8 @@ So normally you might want to do the following:
 - [Run tests](#testing-the-code) and [lint the code](#linting-the-code) to see if it work and is
 written correctly.
 
+![Golang Mind map](https://github.com/TomorrowWu/pictures/blob/master/learn-golang/LearGolang.png?raw=true)
+
 ## Table of Contents
 
 1. **Getting Started**
