@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"learn-golang/crawler_distributed/rpcsupport"
-	"learn-golang/crawler_distributed/worker"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/rpcsupport"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/worker"
 )
 
 var port = flag.Int("port", 0, "the port for me to listen on")

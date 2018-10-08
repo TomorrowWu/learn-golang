@@ -1,6 +1,6 @@
 package worker
 
-import "learn-golang/crawler/engine"
+import "github.com/TomorrowWu/learn-golang/crawler/engine"
 
 type CrawlService struct{}
 

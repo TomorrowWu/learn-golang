@@ -5,13 +5,13 @@ import (
 	"log"
 	"net/rpc"
 
-	"learn-golang/crawler/engine"
-	"learn-golang/crawler/scheduler"
-	"learn-golang/crawler/zhenai/parser"
-	"learn-golang/crawler_distributed/config"
-	itemsaver "learn-golang/crawler_distributed/persist/client"
-	"learn-golang/crawler_distributed/rpcsupport"
-	worker "learn-golang/crawler_distributed/worker/client"
+	"github.com/TomorrowWu/learn-golang/crawler/engine"
+	"github.com/TomorrowWu/learn-golang/crawler/scheduler"
+	"github.com/TomorrowWu/learn-golang/crawler/zhenai/parser"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/config"
+	itemsaver "github.com/TomorrowWu/learn-golang/crawler_distributed/persist/client"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/rpcsupport"
+	worker "github.com/TomorrowWu/learn-golang/crawler_distributed/worker/client"
 )
 
 func main() {

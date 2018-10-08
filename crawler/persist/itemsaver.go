@@ -3,7 +3,7 @@ package persist
 import (
 	"context"
 	"errors"
-	"learn-golang/crawler/engine"
+	"github.com/TomorrowWu/learn-golang/crawler/engine"
 	"log"
 
 	"github.com/olivere/elastic"

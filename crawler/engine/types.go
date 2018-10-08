@@ -1,6 +1,6 @@
 package engine
 
-import "learn-golang/crawler_distributed/config"
+import "github.com/TomorrowWu/learn-golang/crawler_distributed/config"
 
 type ParserFunc func(contents []byte, url string) ParseResult
 

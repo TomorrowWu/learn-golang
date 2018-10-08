@@ -4,10 +4,10 @@ import (
 	"testing"
 	"time"
 
-	"learn-golang/crawler/engine"
-	"learn-golang/crawler/model"
-	"learn-golang/crawler_distributed/config"
-	"learn-golang/crawler_distributed/rpcsupport"
+	"github.com/TomorrowWu/learn-golang/crawler/engine"
+	"github.com/TomorrowWu/learn-golang/crawler/model"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/config"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/rpcsupport"
 )
 
 func TestItemSaver(t *testing.T) {

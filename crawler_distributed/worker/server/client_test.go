@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"learn-golang/crawler_distributed/config"
-	"learn-golang/crawler_distributed/rpcsupport"
-	"learn-golang/crawler_distributed/worker"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/config"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/rpcsupport"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/worker"
 )
 
 func TestCrawlService(t *testing.T) {

@@ -3,8 +3,8 @@ package persist
 import (
 	"log"
 
-	"learn-golang/crawler/engine"
-	"learn-golang/crawler/persist"
+	"github.com/TomorrowWu/learn-golang/crawler/engine"
+	"github.com/TomorrowWu/learn-golang/crawler/persist"
 
 	"github.com/olivere/elastic"
 )

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"learn-golang/crawler/engine"
-	"learn-golang/crawler/persist"
-	"learn-golang/crawler/scheduler"
-	"learn-golang/crawler/zhenai/parser"
-	"learn-golang/crawler_distributed/config"
+	"github.com/TomorrowWu/learn-golang/crawler/engine"
+	"github.com/TomorrowWu/learn-golang/crawler/persist"
+	"github.com/TomorrowWu/learn-golang/crawler/scheduler"
+	"github.com/TomorrowWu/learn-golang/crawler/zhenai/parser"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/config"
 )
 
 func main() {

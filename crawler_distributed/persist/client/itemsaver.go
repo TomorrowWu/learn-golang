@@ -1,9 +1,9 @@
 package client
 
 import (
-	"learn-golang/crawler/engine"
-	"learn-golang/crawler_distributed/config"
-	"learn-golang/crawler_distributed/rpcsupport"
+	"github.com/TomorrowWu/learn-golang/crawler/engine"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/config"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/rpcsupport"
 
 	"log"
 )

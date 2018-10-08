@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"learn-golang/crawler_distributed/config"
-	"learn-golang/crawler_distributed/persist"
-	"learn-golang/crawler_distributed/rpcsupport"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/config"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/persist"
+	"github.com/TomorrowWu/learn-golang/crawler_distributed/rpcsupport"
 
 	"github.com/olivere/elastic"
 )
