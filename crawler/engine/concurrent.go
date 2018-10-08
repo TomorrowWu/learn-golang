@@ -1,5 +1,71 @@
 package engine
 
 type ConcurrentEngine struct {
-	Scheduler Scheduler
+	Scheduler      Scheduler
+	WorkerCount    int
+	ItemChan       chan Item
+	RequestProcess Processor
+}
+
+type Processor func(Request) (ParseResult, error)
+
+type Scheduler interface {
+	ReadyNotifier
+	Submit(Request)
+	WorkerChan() chan Request
+	Run()
+}
+
+type ReadyNotifier interface {
+	WorkerReady(chan Request)
+}
+
+func (e *ConcurrentEngine) Run(seeds ...Request) {
+	out := make(chan ParseResult)
+	e.Scheduler.Run()
+
+	for i := 0; i < e.WorkerCount; i++ {
+		e.createWorker(e.Scheduler.WorkerChan(), out, e.Scheduler)
+	}
+
+	for _, r := range seeds {
+		if isDuplicate(r.Url) {
+			continue
+		}
+		e.Scheduler.Submit(r)
+	}
+
+	for {
+		result := <-out
+		for _, item := range result.Items {
+			// log.Printf("Got item #%d: %v", itemCount, item)
+			go func() {
+				e.ItemChan <- item
+			}()
+		}
+
+		for _, request := range result.Requests {
+			if isDuplicate(request.Url) {
+				continue
+			}
+			e.Scheduler.Submit(request)
+		}
+	}
+}
+
+// createWorker
+func (e *ConcurrentEngine) createWorker(in chan Request, out chan ParseResult, ready ReadyNotifier) {
+	go func() {
+		for {
+			// Tell scheduler i'm ready
+			ready.WorkerReady(in)
+
+			request := <-in
+			result, err := e.RequestProcess(request)
+			if err != nil {
+				continue
+			}
+			out <- result
+		}
+	}()
 }

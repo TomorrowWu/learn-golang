@@ -1,43 +1,51 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"golang.org/x/net/html/charset"
-	"golang.org/x/text/encoding"
-	"golang.org/x/text/transform"
-	"io"
-	"io/ioutil"
-	"net/http"
+	"learn-golang/crawler/engine"
+	"learn-golang/crawler/persist"
+	"learn-golang/crawler/scheduler"
+	"learn-golang/crawler/zhenai/parser"
+	"learn-golang/crawler_distributed/config"
 )
 
 func main() {
-	resp, err := http.Get("http://www.zhenai.com/zhenghun")
-	if err != nil {
-		panic(err)
-	}
-	defer resp.Body.Close()
+	// 1. Single Task Edition
+	// engine.SimpleEngine{}.Run(engine.Request{
+	// 	Url:        "http://www.zhenai.com/zhenghun",
+	// 	ParserFunc: parser.ParseCityList,
+	// })
 
-	if resp.StatusCode != http.StatusOK {
-		fmt.Println("Error: status code", resp.StatusCode)
-		return
+	// 2. Concurrent Edition
+	// e := engine.ConcurrentEngine{
+	// 	Scheduler:   &scheduler.SimpleScheduler{},
+	// 	WorkerCount: 100,
+	// }
+
+	// 3. Queue Scheduler Edition
+	// e := engine.ConcurrentEngine{
+	// 	Scheduler:   &scheduler.QueuedScheduler{},
+	// 	WorkerCount: 100,
+	// }
+	// e.Run(engine.Request{
+	// 	Url:        "http://www.zhenai.com/zhenghun",
+	// 	ParserFunc: parser.ParseCityList,
+	// })
+
+	//4. Page
+	itemChan, err := persist.ItemSaver("crawler_dating_profile")
+	if err != nil {
+		//panic(err)
 	}
 
-	e := determineRncoding(resp.Body)
-	//utf8Reader := transform.NewReader(resp.Body, simplifiedchinese.GBK.NewDecoder())
-	utf8Reader := transform.NewReader(resp.Body, e.NewDecoder())
-	all, err := ioutil.ReadAll(utf8Reader)
-	if err != nil {
-		panic(err)
+	e := engine.ConcurrentEngine{
+		Scheduler:      &scheduler.QueuedScheduler{},
+		WorkerCount:    100,
+		ItemChan:       itemChan,
+		RequestProcess: engine.Worker,
 	}
-	fmt.Printf("%s\n", all)
-}
-
-func determineRncoding(r io.Reader) encoding.Encoding {
-	bytes, err := bufio.NewReader(r).Peek(1024)
-	if err != nil {
-		panic(err)
-	}
-	e, _, _ := charset.DetermineEncoding(bytes, "")
-	return e
+	e.Run(engine.Request{
+		Url: "http://www.zhenai.com/zhenghun",
+		Parser: engine.NewFuncParser(
+			parser.ParseCityList, config.ParseCityList),
+	})
 }
