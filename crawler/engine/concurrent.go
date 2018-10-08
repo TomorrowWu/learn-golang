@@ -24,6 +24,7 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 	out := make(chan ParseResult)
 	e.Scheduler.Run()
 
+	//start 100(WorkerCount) Goroutine worker to process request
 	for i := 0; i < e.WorkerCount; i++ {
 		e.createWorker(e.Scheduler.WorkerChan(), out, e.Scheduler)
 	}
@@ -35,6 +36,7 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 		e.Scheduler.Submit(r)
 	}
 
+	//process result
 	for {
 		result := <-out
 		for _, item := range result.Items {

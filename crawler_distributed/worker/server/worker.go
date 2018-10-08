@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 
-	"learn-golang/crawler_distributed/config"
 	"learn-golang/crawler_distributed/rpcsupport"
 	"learn-golang/crawler_distributed/worker"
 )
@@ -18,7 +17,8 @@ func main() {
 		fmt.Println("must specify a port")
 		return
 	}
+	//port: config.WorkerPort0
 	log.Fatal(rpcsupport.ServeRpc(
-		fmt.Sprintf(":%d", config.WorkerPort0),
+		fmt.Sprintf(":%d", port),
 		worker.CrawlService{}))
 }

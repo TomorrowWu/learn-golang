@@ -3,6 +3,7 @@ package parser
 import (
 	"learn-golang/crawler/engine"
 	"learn-golang/crawler/model"
+	"learn-golang/crawler_distributed/config"
 	"regexp"
 	"strconv"
 )
@@ -93,7 +94,7 @@ func (p *ProfileParser) Parser(contents []byte, url string) engine.ParseResult {
 }
 
 func (p *ProfileParser) Serialize() (name string, args interface{}) {
-	return "ProfileParser", p.userName
+	return config.ParseProfile, p.userName
 }
 
 func NewProfileParser(name string) *ProfileParser {
