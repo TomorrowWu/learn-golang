@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"learn-golang/functional/fib"
+	"github.com/TomorrowWu/learn-golang/functional/fib"
 )
 
 func tryDefer() {
