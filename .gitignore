@@ -19,3 +19,4 @@ chatroom/client/chatroom_client
 /chatroom/server/main/main
 /chatroom/server/main/chatroom_server
 /crawler/crawler
+/flag/flag
