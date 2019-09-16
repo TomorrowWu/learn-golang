@@ -108,7 +108,7 @@ func main() {
 		Top:    -1,
 	}
 
-	exp := "30+30*6-4-6"
+	exp := "30+30*6-4*2-6"
 	//定义一个index ，帮助扫描exp
 	index := 0
 	//为了配合运算，我们定义需要的变量
@@ -132,22 +132,23 @@ func main() {
 			} else {
 				//如果发现opertStack栈顶的运算符的优先级大于等于当前准备入栈的运算符的优先级
 				//，就从符号栈pop出，并从数栈也pop 两个数，进行运算，运算后的结果再重新入栈
-				//到数栈， 当前符号再入符号栈
-				if operStack.Priority(operStack.arr[operStack.Top]) >=
+				//到数栈，
+				//继续进行比较, 如果栈顶的运算符优先级,
+				//大于当前准备入栈的运算符优先级,先pop出栈.直到栈为空
+				for operStack.Priority(operStack.arr[operStack.Top]) >=
 					operStack.Priority(temp) {
 					num1, _ = numStack.Pop()
 					num2, _ = numStack.Pop()
 					oper, _ = operStack.Pop()
 					result = operStack.Cal(num1, num2, oper)
-					//将计算结果重新入数栈
+					//运算结果重新入数栈
 					numStack.Push(result)
-					//当前的符号压入符号栈
-					operStack.Push(temp)
+					if operStack.Top == -1 {
+						break
+					}
 
-				} else {
-					operStack.Push(temp)
 				}
-
+				operStack.Push(temp)
 			}
 
 		} else { //说明是数
